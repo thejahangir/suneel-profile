@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, FileText, ChevronDown } from "lucide-react";
 import { personalInfo, rotatingTitles, statistics } from "../data/portfolioData";
+import DpSuneel from '../assets/suneel-headshot.png';
 
 export const Hero: React.FC = () => {
   const [titleIndex, setTitleIndex] = useState(0);
@@ -165,7 +166,7 @@ export const Hero: React.FC = () => {
             <div className="absolute inset-[3px] bg-brand-gray-950/90 rounded-3xl overflow-hidden glass-panel border border-brand-gray-800 shadow-[0_15px_40px_rgba(0,0,0,0.8)] flex items-center justify-center p-4">
               <div className="w-full h-full relative rounded-2xl overflow-hidden">
                 <img
-                  src="/suneel-headshot.png"
+                  src={DpSuneel}
                   alt="Suneel Kandali professional headshot"
                   className="w-full h-full object-cover object-center filter saturate-105 scale-102 transition-transform duration-700 group-hover:scale-105"
                   onError={(e) => {
