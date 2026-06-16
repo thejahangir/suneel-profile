@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Utilities and Premium Styling */
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(10, 10, 10, 0.65);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(15, 15, 15, 0.8);
+  border-color: rgba(251, 97, 7, 0.3);
+  box-shadow: 0 10px 30px -10px rgba(251, 97, 7, 0.15);
+}
+
+/* Premium Gradient Text */
+.text-gradient {
+  background: linear-gradient(135deg, #FB6107 0%, #F3DE2C 50%, #70E000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-orange {
+  background: linear-gradient(135deg, #FB6107 0%, #F3DE2C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-green {
+  background: linear-gradient(135deg, #F3DE2C 0%, #70E000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Aurora background blurs */
+.aurora-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.aurora-glow-orange {
+  position: absolute;
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, rgba(251, 97, 7, 0.08) 0%, rgba(251, 97, 7, 0) 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+}
+
+.aurora-glow-yellow {
+  position: absolute;
+  width: 45vw;
+  height: 45vw;
+  background: radial-gradient(circle, rgba(243, 222, 44, 0.06) 0%, rgba(243, 222, 44, 0) 70%);
+  border-radius: 50%;
+  filter: blur(100px);
+}
+
+.aurora-glow-green {
+  position: absolute;
+  width: 35vw;
+  height: 35vw;
+  background: radial-gradient(circle, rgba(112, 224, 0, 0.07) 0%, rgba(112, 224, 0, 0) 70%);
+  border-radius: 50%;
+  filter: blur(90px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f1f1f;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(251, 97, 7, 0.5);
+}
+
+/* Hide scrollbar for elements while maintaining scrollability */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Glow Borders */
+.glow-border-orange {
+  box-shadow: 0 0 15px -3px rgba(251, 97, 7, 0.4);
+}
+.glow-border-yellow {
+  box-shadow: 0 0 15px -3px rgba(243, 222, 44, 0.4);
+}
+.glow-border-green {
+  box-shadow: 0 0 15px -3px rgba(112, 224, 0, 0.4);
+}
+
+/* Sub-card hover shine effect */
+.shine-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-hover::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 20%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 30%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.1) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  transition: all 0.6s ease;
+  pointer-events: none;
+}
+
+.shine-hover:hover::after {
+  left: 150%;
+}
