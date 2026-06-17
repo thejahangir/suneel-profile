@@ -1,148 +1,79 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { Award, Briefcase, Users, ShieldAlert, Cpu } from "lucide-react";
-import { statistics } from "../data/portfolioData";
+import { Section, FadeIn, SectionHeading } from './Section'
 
-// Helper component for animated numerical counters
-const StatCounter: React.FC<{ value: string; duration?: number }> = ({ value, duration = 1.5 }) => {
-  const [count, setCount] = useState("");
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  useEffect(() => {
-    if (!isInView) return;
-
-    // Parse the number and the suffix
-    const numMatch = value.match(/^([\d.,]+)/);
-    const suffixMatch = value.match(/([^\d.,]+)$/);
-
-    if (!numMatch) {
-      setCount(value);
-      return;
-    }
-
-    const numStr = numMatch[1].replace(/,/g, '');
-    const isFloat = numStr.includes('.');
-    const endValue = isFloat ? parseFloat(numStr) : parseInt(numStr, 10);
-    const suffix = suffixMatch ? suffixMatch[1] : "";
-
-    let start = 0;
-    const stepTime = 25; // 25ms steps
-    const steps = (duration * 1000) / stepTime;
-    const increment = endValue / steps;
-
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= endValue) {
-        clearInterval(timer);
-        setCount(value);
-      } else {
-        const formatted = isFloat 
-          ? start.toFixed(1) 
-          : Math.floor(start).toLocaleString();
-        setCount(`${formatted}${suffix}`);
-      }
-    }, stepTime);
-
-    return () => clearInterval(timer);
-  }, [value, duration, isInView]);
-
+export default function About() {
   return (
-    <span ref={ref} className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-yellow">
-      {count || "0"}
-    </span>
-  );
-};
+    <Section id="about" label="About">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
 
-export const About: React.FC = () => {
-  return (
-    <section id="about" className="relative py-24 sm:py-32 overflow-hidden px-4 sm:px-6 lg:px-8 border-t border-brand-gray-900/60 bg-black">
-      
-      {/* Background decoration */}
-      <div className="absolute top-1/2 left-0 w-80 h-80 rounded-full bg-brand-orange/5 blur-[120px] pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          
-          {/* Left Side: Storytelling */}
-          <div className="lg:col-span-6 text-left">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="h-px w-8 bg-brand-orange" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-brand-orange">
-                My Philosophy
-              </span>
-            </div>
-            
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white mb-6 leading-tight">
-              Engineering Leadership Through Innovation
-            </h2>
+        {/* Heading column */}
+        <div className="lg:col-span-4">
+          <FadeIn>
+            <SectionHeading id="about">About</SectionHeading>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <p className="editorial-label mt-4 text-[#3A3A3A]">
+              Engineering Leader<br />
+              Architect · Mentor · Builder
+            </p>
+          </FadeIn>
+        </div>
 
-            <div className="space-y-6 text-brand-gray-200 font-normal text-base sm:text-lg leading-relaxed">
-              <p>
-                As a <strong className="text-white font-medium">Principal Engineer at Oracle USA</strong>, my focus is at the intersection of enterprise complexity, cloud scalability, and cutting-edge artificial intelligence. With over 15 years in software architecture, I design and run systems that handle massive transactional throughput while reducing architectural overhead.
-              </p>
-              <p>
-                I believe that architecture is not just about writing code; it is about building reliable, self-governing platforms. From launching <strong className="text-white font-medium">Employee PulseGuard</strong> across 170K+ enterprise devices to scaling Walmart's training systems for 1.6M associates, my approach revolves around decoupling systems, deploying event-driven architectures, and embedding agentic AI solutions to automate operational friction.
-              </p>
-              <p>
-                In addition to system design, I dedicate significant effort to <strong className="text-white font-medium">mentoring and technical leadership</strong>. I conduct architecture reviews, guide technical roadmaps, align cross-functional initiatives, and foster high-velocity engineering cultures that deliver multi-million dollar annual savings.
-              </p>
-            </div>
-          </div>
+        {/* Story column */}
+        <div className="lg:col-span-8 space-y-6">
+          <FadeIn delay={0.1}>
+            <p
+              className="font-serif-display italic text-black leading-snug"
+              style={{ fontSize: 'clamp(1.3rem, 2.2vw, 1.6rem)' }}
+            >
+              "I build systems that outlast trends — distributed, resilient, and designed
+              to scale at the pace of business."
+            </p>
+          </FadeIn>
 
-          {/* Right Side: Key Achievements Matrix */}
-          <div className="lg:col-span-6 flex flex-col justify-center">
-            
-            {/* Stat Cards Grid */}
-            <div className="grid grid-cols-2 gap-4 sm:gap-6">
-              {statistics.map((stat, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className={`glass-panel p-6 rounded-2xl text-left border border-brand-gray-800 hover:border-brand-orange/40 hover:bg-brand-gray-950/80 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.4)] shine-hover group ${
-                    idx === 4 ? "col-span-2" : ""
-                  }`}
-                >
-                  <div className="flex justify-between items-start mb-3">
-                    <StatCounter value={stat.value} />
-                    {idx === 0 && <Award className="w-5 h-5 text-brand-orange/60 group-hover:text-brand-orange transition-colors" />}
-                    {idx === 1 && <Briefcase className="w-5 h-5 text-brand-yellow/60 group-hover:text-brand-yellow transition-colors" />}
-                    {idx === 2 && <Cpu className="w-5 h-5 text-brand-green/60 group-hover:text-brand-green transition-colors" />}
-                    {idx === 3 && <Users className="w-5 h-5 text-brand-orange/60 group-hover:text-brand-orange transition-colors" />}
-                    {idx === 4 && <ShieldAlert className="w-5 h-5 text-brand-yellow/60 group-hover:text-brand-yellow transition-colors" />}
-                  </div>
-                  
-                  <h3 className="text-sm font-semibold font-display text-white mb-1 group-hover:text-brand-yellow transition-colors uppercase tracking-wider">
-                    {stat.label}
-                  </h3>
-                  
-                  <p className="text-xs text-brand-gray-300 font-normal leading-relaxed">
-                    {stat.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
+          <FadeIn delay={0.15}>
+            <div className="section-rule" />
+          </FadeIn>
 
-            {/* Quote Panel */}
-            <div className="mt-8 glass-panel p-6 rounded-2xl text-left border border-brand-gray-800 bg-brand-gray-950/20 relative">
-              <div className="absolute top-4 right-6 text-6xl font-serif text-brand-orange/10 pointer-events-none">“</div>
-              <p className="text-sm italic text-brand-gray-200 font-normal leading-relaxed relative z-10">
-                &ldquo;The best architectures are invisible. They run autonomously, self-heal under load, and adapt to the needs of the business without manual operations.&rdquo;
-              </p>
-              <div className="mt-3 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
-                <span className="text-[11px] font-semibold tracking-wider text-brand-orange uppercase">Suneel Kandali</span>
-              </div>
-            </div>
+          <FadeIn delay={0.2}>
+            <p className="font-serif-body text-[#111111] leading-relaxed" style={{ fontSize: '1.05rem' }}>
+              Over fifteen years, I have architected systems that manage millions of users, power
+              enterprise operations across thousands of stores, and reduce cost at the scale of
+              millions of dollars annually. My engineering philosophy is grounded in simplicity,
+              composability, and long-term maintainability — the antidote to complexity for its own sake.
+            </p>
+          </FadeIn>
 
-          </div>
+          <FadeIn delay={0.25}>
+            <p className="font-serif-body text-[#111111] leading-relaxed" style={{ fontSize: '1.05rem' }}>
+              At <strong className="text-black font-semibold">Oracle</strong>, I lead the architecture
+              of cloud-native platforms that integrate Agentic AI and Generative AI into enterprise workflows,
+              supporting 170,000+ endpoints and critical SaaS infrastructure. My work spans from
+              low-level system design to executive-facing technical strategy — bridging the gap between
+              what engineering can build and what the business needs to scale.
+            </p>
+          </FadeIn>
 
+          <FadeIn delay={0.3}>
+            <p className="font-serif-body text-[#111111] leading-relaxed" style={{ fontSize: '1.05rem' }}>
+              Before Oracle, I spent years at <strong className="text-black font-semibold">Walmart</strong>{' '}
+              designing systems that served millions of associates across 5,000+ retail locations.
+              At <strong className="text-black font-semibold">Hyundai Motors America</strong>, I built
+              the technical foundation for a company-wide digital transformation. At{' '}
+              <strong className="text-black font-semibold">Dell EMC</strong>, I engineered enterprise
+              middleware and API platforms trusted by Fortune 500 clients globally.
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={0.35}>
+            <p className="font-serif-body text-[#111111] leading-relaxed" style={{ fontSize: '1.05rem' }}>
+              Leadership, for me, is about multiplying capability across teams — not individual heroics.
+              I mentor engineers, drive architecture reviews, establish engineering standards, and ensure
+              that technical decisions align with business outcomes. I believe the best software is built
+              by teams that understand <em>why</em> they are building, not just <em>what</em>.
+            </p>
+          </FadeIn>
         </div>
       </div>
-    </section>
-  );
-};
-export default About;
+    </Section>
+  )
+}

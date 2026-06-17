@@ -1,83 +1,109 @@
-import React from "react";
-import { Users, GraduationCap, FileSearch, Compass, Network, TrendingUp } from "lucide-react";
-import { leadershipHighlights } from "../data/portfolioData";
+import { Section, FadeIn, SectionHeading } from './Section'
+import { Users, Target, GitBranch, BookOpen, Lightbulb, Award } from 'lucide-react'
 
-export const Leadership: React.FC = () => {
-  const getIcon = (idx: number, className: string) => {
-    switch (idx) {
-      case 0:
-        return <Compass className={className} />;
-      case 1:
-        return <GraduationCap className={className} />;
-      case 2:
-        return <FileSearch className={className} />;
-      case 3:
-        return <Network className={className} />;
-      case 4:
-        return <Users className={className} />;
-      default:
-        return <TrendingUp className={className} />;
-    }
-  };
+const pillars = [
+  {
+    icon: GitBranch,
+    title: 'Architecture Reviews',
+    body: 'Leading cross-team architecture reviews that challenge assumptions, surface tradeoffs, and align engineering decisions with long-term system health. Not gatekeeping — enabling.',
+  },
+  {
+    icon: Target,
+    title: 'Technical Strategy',
+    body: 'Translating business objectives into multi-year engineering roadmaps. Working with product, executive, and engineering leadership to set the technical direction with confidence and clarity.',
+  },
+  {
+    icon: Users,
+    title: 'Engineering Mentorship',
+    body: 'Investing in the career growth of engineers at all levels — from early-career developers to senior engineers pursuing staff and principal tracks. Mentorship that creates force multipliers.',
+  },
+  {
+    icon: Lightbulb,
+    title: 'Platform Thinking',
+    body: 'Designing internal platforms and APIs that give engineering teams leverage — not bottlenecks. Building the foundations that make product development faster and more reliable across the organization.',
+  },
+  {
+    icon: BookOpen,
+    title: 'Engineering Standards',
+    body: 'Establishing coding standards, API design principles, observability requirements, and security baselines that elevate team quality without stifling autonomy.',
+  },
+  {
+    icon: Award,
+    title: 'Cross-Functional Leadership',
+    body: 'Bridging engineering, product, security, and business stakeholders. Translating complex technical realities into clear decisions. Leading without hierarchy when the work demands it.',
+  },
+]
 
-  const getBorderColor = (idx: number) => {
-    if (idx % 3 === 0) return "hover:border-brand-orange/40";
-    if (idx % 3 === 1) return "hover:border-brand-yellow/40";
-    return "hover:border-brand-green/40";
-  };
+const leadershipQuotes = [
+  {
+    quote: "The best engineers I have worked with do not just solve the problem in front of them — they design the solution that prevents the next five problems.",
+    context: 'On Engineering Excellence',
+  },
+  {
+    quote: "Mentorship is not about transferring knowledge. It is about creating the conditions where someone can discover their own engineering instincts.",
+    context: 'On Mentorship',
+  },
+]
 
+export default function Leadership() {
   return (
-    <section id="leadership" className="relative py-24 sm:py-32 overflow-hidden px-4 sm:px-6 lg:px-8 border-t border-brand-gray-900/60 bg-black">
-      
-      {/* Background blurs */}
-      <div className="absolute top-1/2 right-0 w-80 h-80 bg-brand-green/5 rounded-full blur-[120px] pointer-events-none" />
+    <Section id="leadership" label="Leadership & Mentorship">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div className="lg:col-span-4">
+          <FadeIn>
+            <SectionHeading id="leadership">Leadership<br />& Mentorship</SectionHeading>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <p className="font-serif-body text-[#111111] mt-4" style={{ fontSize: '1rem' }}>
+              Technical leadership at the Principal level is about expanding the capability
+              of the teams and systems around you — not just shipping code.
+            </p>
+          </FadeIn>
 
-      <div className="max-w-7xl mx-auto z-20 relative">
-        
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="flex items-center gap-2 justify-center mb-4">
-            <div className="h-px w-8 bg-brand-green" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-green">
-              Organizational Leadership
-            </span>
-            <div className="h-px w-8 bg-brand-green" />
+          {/* Quotes */}
+          <div className="mt-10 space-y-8">
+            {leadershipQuotes.map((q, i) => (
+              <FadeIn key={i} delay={0.15 + i * 0.1}>
+                <blockquote className="border-l-2 border-black pl-4">
+                  <p className="font-serif-display italic text-black text-sm leading-relaxed mb-2">
+                    &ldquo;{q.quote}&rdquo;
+                  </p>
+                  <p className="editorial-label text-[#3A3A3A]">{q.context}</p>
+                </blockquote>
+              </FadeIn>
+            ))}
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white mb-6">
-            Beyond Engineering
-          </h2>
-          <p className="text-brand-gray-200 font-normal text-base sm:text-lg leading-relaxed">
-            Leading teams, mentoring staff, guiding architecture boards, and delivering multi-million dollar annual savings through financial engineering.
-          </p>
         </div>
 
-        {/* Highlights Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {leadershipHighlights.map((highlight, idx) => (
-            <div
-              key={highlight.title}
-              className={`glass-panel p-6 sm:p-8 rounded-2xl border border-brand-gray-900 text-left transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.4)] shine-hover group ${getBorderColor(idx)}`}
-            >
-              {/* Icon */}
-              <div className="w-10 h-10 rounded-xl bg-brand-gray-950 border border-brand-gray-850 flex items-center justify-center text-brand-gray-200 group-hover:text-brand-orange transition-colors duration-300 mb-6">
-                {getIcon(idx, "w-5 h-5")}
-              </div>
-
-              {/* Title */}
-              <h3 className="text-lg font-bold font-display text-white mb-2 group-hover:text-brand-yellow transition-colors duration-300">
-                {highlight.title}
-              </h3>
-
-              {/* Description */}
-              <p className="text-xs sm:text-sm text-brand-gray-200 font-normal leading-relaxed">
-                {highlight.description}
-              </p>
-            </div>
-          ))}
+        <div className="lg:col-span-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {pillars.map(({ icon: Icon, title, body }, i) => (
+              <FadeIn key={title} delay={i * 0.07}>
+                <div
+                  className="border border-[#D9D9D9] p-5 hover:border-black transition-colors duration-200 h-full"
+                  role="article"
+                  aria-labelledby={`leadership-pillar-${i}`}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-7 h-7 border border-[#D9D9D9] flex items-center justify-center flex-shrink-0">
+                      <Icon size={14} className="text-[#111111]" aria-hidden="true" />
+                    </div>
+                    <h3
+                      id={`leadership-pillar-${i}`}
+                      className="font-serif-display font-semibold text-black text-sm"
+                    >
+                      {title}
+                    </h3>
+                  </div>
+                  <p className="font-serif-body text-[#111111] text-sm leading-relaxed">
+                    {body}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
         </div>
-
       </div>
-    </section>
-  );
-};
-export default Leadership;
+    </Section>
+  )
+}

@@ -1,44 +1,68 @@
-import React, { useState, useEffect } from "react";
-import AppV1 from "./AppV1";
-import AppV2 from "./AppV2";
-import VersionSwitcher from "./components/VersionSwitcher";
+import Hero from './components/Hero'
+import About from './components/About'
+import Experience from './components/Experience'
+import Work from './components/Work'
+import Expertise from './components/Expertise'
+import Leadership from './components/Leadership'
+import Writing from './components/Writing'
+import Contact from './components/Contact'
+import Footer from './components/Footer'
+import SocialBar from './components/SocialBar'
+import SectionIndicator from './components/SectionIndicator'
+import ScrollToTop from './components/ScrollToTop'
 
-export const App: React.FC = () => {
-  const [version, setVersion] = useState<"v1" | "v2">("v1");
-
-  useEffect(() => {
-    // Parse query params to load correct version on load or refresh
-    const handleUrlChange = () => {
-      const params = new URLSearchParams(window.location.search);
-      const v = params.get("v");
-      if (v === "2") {
-        setVersion("v2");
-      } else {
-        setVersion("v1");
-      }
-    };
-
-    handleUrlChange();
-    window.addEventListener("popstate", handleUrlChange);
-
-    return () => {
-      window.removeEventListener("popstate", handleUrlChange);
-    };
-  }, []);
-
-  const handleSwitch = (selectedVersion: "v1" | "v2") => {
-    setVersion(selectedVersion);
-    const versionNum = selectedVersion === "v2" ? "2" : "1";
-    const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?v=${versionNum}`;
-    window.history.pushState({ path: newUrl }, "", newUrl);
-  };
-
+function App() {
   return (
-    <>
-      {version === "v2" ? <AppV2 /> : <AppV1 />}
-      <VersionSwitcher currentVersion={version} onSwitch={handleSwitch} />
-    </>
-  );
-};
+    <div className="bg-white min-h-screen">
+      <SocialBar />
+      <SectionIndicator />
+      <ScrollToTop />
+      <main id="main-content" role="main">
+        <Hero />
 
-export default App;
+        {/* Divider */}
+        <div className="max-w-editorial mx-auto px-6 lg:px-12">
+          <div className="section-rule" />
+        </div>
+
+        <About />
+
+        <div className="max-w-editorial mx-auto px-6 lg:px-12">
+          <div className="section-rule" />
+        </div>
+
+        <Experience />
+
+        <div className="max-w-editorial mx-auto px-6 lg:px-12">
+          <div className="section-rule" />
+        </div>
+
+        <Work />
+
+        <div className="max-w-editorial mx-auto px-6 lg:px-12">
+          <div className="section-rule" />
+        </div>
+
+        <Expertise />
+
+        <div className="max-w-editorial mx-auto px-6 lg:px-12">
+          <div className="section-rule" />
+        </div>
+
+        <Leadership />
+
+        <div className="max-w-editorial mx-auto px-6 lg:px-12">
+          <div className="section-rule" />
+        </div>
+
+        <Writing />
+
+        <Contact />
+      </main>
+
+      <Footer />
+    </div>
+  )
+}
+
+export default App

@@ -1,204 +1,288 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, FileText, ChevronDown } from "lucide-react";
-import { personalInfo, rotatingTitles, statistics } from "../data/portfolioData";
-import DpSuneel from '../assets/suneel-headshot.png';
+import { Mail, Phone, MapPin, BookOpen, ExternalLink } from 'lucide-react'
+import { LinkedInIcon, GitHubIcon } from './BrandIcons'
+import { motion } from 'framer-motion'
 
-export const Hero: React.FC = () => {
-  const [titleIndex, setTitleIndex] = useState(0);
+const contactLinks = [
+  {
+    icon: LinkedInIcon,
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/suneelkandali',
+    href: 'https://www.linkedin.com/in/suneelkandali',
+  },
+  {
+    icon: GitHubIcon,
+    label: 'GitHub',
+    value: 'github.com/suneelkandali',
+    href: 'https://github.com/suneelkandali',
+  },
+  {
+    icon: BookOpen,
+    label: 'Blog',
+    value: 'suneelkandali.com/blog',
+    href: 'https://suneelkandali.com/blog',
+  },
+  {
+    icon: Mail,
+    label: 'Email',
+    value: 'suneelkandali@gmail.com',
+    href: 'mailto:suneelkandali@gmail.com',
+  },
+  {
+    icon: Phone,
+    label: 'Phone',
+    value: '+1 (469) 335-8413',
+    href: 'tel:+14693358413',
+  },
+  {
+    icon: MapPin,
+    label: 'Location',
+    value: 'Austin, Texas, USA',
+    href: null,
+  },
+]
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTitleIndex((prevIndex) => (prevIndex + 1) % rotatingTitles.length);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
+const highlights = [
+  '15+ Years Experience',
+  'Principal Engineer at Oracle',
+  '10+ Years in USA',
+  'Cloud Native Expert',
+  'Agentic AI & GenAI Architect',
+  'Enterprise Scale Systems',
+]
 
-  const handleScrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const offset = 100;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = el.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-    }
-  };
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  }),
+}
 
+export default function Hero() {
   return (
     <section
-      id="home"
-      className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden px-4 sm:px-6 lg:px-8"
+      id="hero"
+      className="min-h-screen pt-0 flex items-start"
+      aria-label="Hero section"
     >
-      {/* Background radial overlays */}
-      <div className="absolute inset-0 z-0">
-        <div className="aurora-glow-orange top-1/4 left-1/4 animate-float" />
-        <div className="aurora-glow-yellow bottom-1/3 right-1/4 animate-pulse-slow" style={{ animationDuration: '8s' }} />
-        <div className="aurora-glow-green top-1/3 right-10 animate-float" style={{ animationDuration: '10s' }} />
-      </div>
+      <div className="w-full max-w-editorial mx-auto px-6 lg:px-12">
+        {/* Top rule */}
+        <div className="section-rule pt-12 pb-0" />
 
-      <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-20 relative">
-        
-        {/* Left Side: Typography */}
-        <div className="lg:col-span-7 flex flex-col justify-center text-left">
-          
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-brand-gray-950/80 border border-brand-gray-800 rounded-full px-4 py-1.5 w-fit mb-6 shadow-[0_4px_20px_rgba(251,97,7,0.05)]"
-          >
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-green"></span>
-            </span>
-            <span className="text-[11px] font-semibold text-brand-gray-300 uppercase tracking-widest">
-              Principal Systems Architect
-            </span>
-          </motion.div>
+        <div className="flex flex-col lg:flex-row gap-0 lg:gap-16 lg:items-start pt-0">
 
-          {/* Name & Headline */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <h1 className="text-[3.5rem] sm:text-6xl lg:text-7xl font-extrabold font-display leading-[1.05] tracking-tight text-white mb-2">
-              <span className="block text-brand-gray-200 font-medium text-2xl tracking-normal font-sans mb-3">
-                {personalInfo.name}
-              </span>
-              Architecting Enterprise
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-brand-yellow to-brand-green animate-gradient-x py-1">
-                Systems That Scale
-              </span>
-            </h1>
-          </motion.div>
+          {/* Left: Sticky Photo Column */}
+          <div className="w-full lg:w-[38%] lg:sticky lg:top-8 pt-12 lg:pt-16 pb-8 flex-shrink-0">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="relative"
+            >
+              {/* Photo frame — circle */}
+              <div
+                className="relative overflow-hidden rounded-full"
+                style={{ width: '300px', height: '300px', maxWidth: '100%' }}
+              >
+                <img
+                  src="/suneel-headshot.png"
+                  alt="Suneel Kandali — Principal Engineer and Software Architect"
+                  className="w-full h-full object-cover object-top photo-bw"
+                  style={{ objectPosition: '50% 15%' }}
+                  loading="eager"
+                />
+                {/* Outer ring */}
+                <div className="absolute inset-0 rounded-full ring-2 ring-inset ring-black/10 pointer-events-none" />
+              </div>
+              {/* Outer border ring (sits outside the circle) */}
+              <div
+                className="absolute rounded-full border border-[#D9D9D9]"
+                style={{ width: '308px', height: '308px', top: '-4px', left: '-4px', maxWidth: 'none', pointerEvents: 'none' }}
+                aria-hidden="true"
+              />
 
-          {/* Dynamic Rotating Titles */}
-          <div className="h-12 sm:h-16 flex items-center mb-6">
-            <span className="text-xl sm:text-2xl text-brand-gray-200 mr-2 font-normal">I am a</span>
-            <div className="overflow-hidden relative h-full flex-1 flex items-center">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={titleIndex}
-                  initial={{ y: 30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -30, opacity: 0 }}
-                  transition={{ type: "spring", stiffness: 100, damping: 15 }}
-                  className="absolute text-xl sm:text-2xl font-bold font-display text-brand-yellow tracking-wide"
-                >
-                  {rotatingTitles[titleIndex]}
-                </motion.span>
-              </AnimatePresence>
-            </div>
+              {/* Name below photo on mobile */}
+              <div className="mt-6 lg:hidden">
+                <p className="editorial-label mb-2">Principal Engineer</p>
+                <h1 className="font-serif-display text-4xl font-bold text-black leading-tight">
+                  Suneel<br />Kandali
+                </h1>
+              </div>
+            </motion.div>
+
+            {/* Contact block */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="mt-8 space-y-3"
+              aria-label="Contact information"
+            >
+              <p className="editorial-label mb-4" style={{ color: '#111111' }}>Contact & Presence</p>
+              {contactLinks.map(({ icon: Icon, label, value, href }) => (
+                <div key={label} className="flex items-start gap-3">
+                  <Icon size={13} className="text-[#2A2A2A] mt-1 flex-shrink-0" />
+                  <div className="min-w-0">
+                    <p className="font-sans-ui text-[10px] uppercase tracking-widest text-[#111111] leading-none mb-0.5">
+                      {label}
+                    </p>
+                    {href ? (
+                      <a
+                        href={href}
+                        target={href.startsWith('http') ? '_blank' : undefined}
+                        rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="font-sans-ui text-xs text-[#111111] hover:text-black transition-colors truncate block"
+                        aria-label={`${label}: ${value}`}
+                      >
+                        {value}
+                      </a>
+                    ) : (
+                      <span className="font-sans-ui text-xs text-[#111111]">{value}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </motion.div>
           </div>
 
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg text-brand-gray-200 font-normal max-w-xl leading-relaxed mb-10"
-          >
-            {statistics[0].value} years building enterprise-scale distributed systems, cloud-native applications, AI-powered platforms, and mission-critical software solutions used by millions of users worldwide.
-          </motion.p>
+          {/* Right: Content Column */}
+          <div className="flex-1 pt-0 lg:pt-16 pb-20 min-w-0">
 
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap gap-4 items-center"
-          >
-            {/* Primary glow button */}
-            <button
-              onClick={() => handleScrollTo("contact")}
-              className="px-6 py-3.5 bg-gradient-to-r from-brand-orange to-brand-yellow hover:from-brand-yellow hover:to-brand-green text-black font-semibold rounded-full flex items-center gap-2 group transition-all duration-300 transform hover:scale-105 shadow-[0_4px_20px_rgba(251,97,7,0.3)] hover:shadow-[0_4px_30px_rgba(112,224,0,0.4)]"
+            {/* Section label — desktop only */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className="hidden lg:flex items-center gap-4 mb-8"
             >
-              Contact Me
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </button>
+              <span className="editorial-label">Principal Engineer</span>
+              <div className="flex-1 h-px bg-[#D9D9D9]" />
+              <span className="editorial-label">CBS · Austin, TX</span>
+            </motion.div>
 
-            {/* Resume Button */}
-            <a
-              href={personalInfo.resume || "/suneel-resume.pdf"}
-              download="Suneel_Kandali_Resume.pdf"
-              className="px-6 py-3.5 bg-brand-gray-950/80 hover:bg-brand-gray-900 border border-brand-gray-800 hover:border-brand-gray-700 text-white font-medium rounded-full flex items-center gap-2 transition-all duration-300 hover:shadow-[0_4px_20px_rgba(255,255,255,0.05)] cursor-pointer"
-            >
-              <FileText className="w-4 h-4 text-brand-yellow" />
-              View Resume
-            </a>
-
-            {/* Secondary CTA */}
-            <button
-              onClick={() => handleScrollTo("projects")}
-              className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-brand-gray-300 hover:text-white transition-colors duration-300 ml-2"
-            >
-              Explore My Work
-            </button>
-          </motion.div>
-
-        </div>
-
-        {/* Right Side: Professional Headshot */}
-        <div className="lg:col-span-5 flex justify-center lg:justify-end">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, type: "spring" }}
-            className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 group"
-          >
-            {/* Pulsing Backglow */}
-            <div className="absolute -inset-4 bg-gradient-to-br from-brand-orange via-brand-yellow to-brand-green rounded-3xl opacity-20 blur-2xl group-hover:opacity-45 transition-opacity duration-700" />
-            
-            {/* Glowing animated border frame */}
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-orange via-brand-yellow to-brand-green rounded-3xl p-[1.5px] animate-spin-slow group-hover:animation-duration-6000 shadow-2xl">
-              {/* Internal container to mask rotating gradient */}
-              <div className="w-full h-full bg-black rounded-3xl" />
+            {/* Hero headline — desktop only */}
+            <div className="hidden lg:block mb-10">
+              <motion.h1
+                custom={0}
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+                className="font-serif-display font-black text-black leading-none"
+                style={{ fontSize: 'clamp(3.5rem, 6vw, 5.5rem)', letterSpacing: '-0.035em' }}
+              >
+                Suneel
+              </motion.h1>
+              <motion.span
+                custom={1}
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+                className="font-serif-display font-black text-black leading-none block"
+                style={{ fontSize: 'clamp(3.5rem, 6vw, 5.5rem)', letterSpacing: '-0.035em' }}
+              >
+                Kandali
+              </motion.span>
             </div>
 
-            {/* Inner Glassmorphism Frame containing Image */}
-            <div className="absolute inset-[3px] bg-brand-gray-950/90 rounded-3xl overflow-hidden glass-panel border border-brand-gray-800 shadow-[0_15px_40px_rgba(0,0,0,0.8)] flex items-center justify-center p-4">
-              <div className="w-full h-full relative rounded-2xl overflow-hidden">
-                <img
-                  src={DpSuneel}
-                  alt="Suneel Kandali professional headshot"
-                  className="w-full h-full object-cover object-center filter saturate-105 scale-102 transition-transform duration-700 group-hover:scale-105"
-                  onError={(e) => {
-                    // Fallback to internal assets path if needed
-                    e.currentTarget.src = "/src/assets/suneel-headshot.png";
-                  }}
-                />
-                
-                {/* Visual Glass overlays inside the image */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent opacity-60" />
-                
-                {/* Glowing border inside */}
-                <div className="absolute inset-0 border border-white/5 rounded-2xl pointer-events-none" />
-              </div>
-            </div>
-          </motion.div>
+            {/* Roles */}
+            <motion.div
+              custom={2}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              className="flex flex-col gap-1 mb-8"
+            >
+              {['Software Architect', 'Cloud-Native Engineering Leader', 'Enterprise AI Platform Builder'].map((role, i) => (
+                <p
+                  key={i}
+                  className="font-serif-display italic font-medium text-[#111111]"
+                  style={{ fontSize: 'clamp(1.1rem, 2vw, 1.4rem)' }}
+                >
+                  {role}
+                </p>
+              ))}
+            </motion.div>
+
+            {/* Rule */}
+            <motion.div
+              custom={3}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              className="section-rule mb-8"
+            />
+
+            {/* Executive summary */}
+            <motion.p
+              custom={4}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              className="font-serif-body text-[#111111] leading-relaxed mb-10"
+              style={{ fontSize: 'clamp(1rem, 1.5vw, 1.1rem)', maxWidth: '56ch' }}
+            >
+              Fifteen years of experience designing enterprise-scale distributed systems,
+              cloud-native applications, AI-powered platforms, and microservices architectures
+              across <strong className="text-black font-semibold">Oracle</strong>,{' '}
+              <strong className="text-black font-semibold">Walmart</strong>,{' '}
+              <strong className="text-black font-semibold">Hyundai Motors</strong>, and{' '}
+              <strong className="text-black font-semibold">Dell EMC</strong>.
+            </motion.p>
+
+            {/* Key highlights */}
+            <motion.div
+              custom={5}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              className="flex flex-wrap gap-2 mb-12"
+              aria-label="Key highlights"
+            >
+              {highlights.map((h) => (
+                <span key={h} className="metric-pill">{h}</span>
+              ))}
+            </motion.div>
+
+            {/* CTA row */}
+            <motion.div
+              custom={6}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              className="flex flex-wrap items-center gap-4"
+            >
+              <a
+                href="mailto:suneelkandali@gmail.com"
+                className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 font-sans-ui text-xs font-semibold tracking-widest uppercase hover:bg-[#222] transition-colors duration-200"
+                aria-label="Send email to Suneel Kandali"
+              >
+                <Mail size={13} />
+                Get in Touch
+              </a>
+              <a
+                href="https://www.linkedin.com/in/suneelkandali"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border border-[#D9D9D9] text-[#111111] px-6 py-3 font-sans-ui text-xs font-semibold tracking-widest uppercase hover:border-black hover:text-black transition-all duration-200"
+                aria-label="View LinkedIn profile"
+              >
+                <ExternalLink size={13} />
+                LinkedIn
+              </a>
+            </motion.div>
+
+            {/* Large rule at bottom */}
+            <motion.div
+              custom={7}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              className="section-rule mt-16"
+            />
+          </div>
         </div>
-
       </div>
-
-      {/* Down indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 cursor-pointer animate-bounce">
-        <button
-          onClick={() => handleScrollTo("about")}
-          aria-label="Scroll down to About Section"
-          className="p-2 rounded-full border border-brand-gray-800 hover:border-brand-gray-600 bg-brand-gray-950/50 transition-colors"
-        >
-          <ChevronDown className="w-4 h-4 text-brand-gray-200 hover:text-white" />
-        </button>
-      </div>
-
     </section>
-  );
-};
-export default Hero;
+  )
+}
