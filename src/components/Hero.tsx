@@ -1,6 +1,7 @@
 import { Mail, Phone, MapPin, BookOpen, ExternalLink } from 'lucide-react'
 import { LinkedInIcon, GitHubIcon } from './BrandIcons'
 import { motion } from 'framer-motion'
+import SuneelDp from "../assets/suneel-headshot.png";
 
 const contactLinks = [
   {
@@ -86,7 +87,7 @@ export default function Hero() {
                 style={{ width: '300px', height: '300px', maxWidth: '100%' }}
               >
                 <img
-                  src="/suneel-headshot.png"
+                  src={SuneelDp}
                   alt="Suneel Kandali — Principal Engineer and Software Architect"
                   className="w-full h-full object-cover object-top photo-bw"
                   style={{ objectPosition: '50% 15%' }}
